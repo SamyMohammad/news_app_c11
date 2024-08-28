@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app_news_c10_fri/home/news/news_widget.dart';
 import 'package:flutter_app_news_c10_fri/home/tabs/tab_item.dart';
-import 'package:flutter_app_news_c10_fri/model/SourceResponse.dart';
 
 class TabWidget extends StatefulWidget {
-  List<Source> sourcesList = [];
-
-  TabWidget({required this.sourcesList});
+  const TabWidget({
+    super.key,
+  });
 
   @override
   State<TabWidget> createState() => _TabWidgetState();
@@ -18,7 +17,7 @@ class _TabWidgetState extends State<TabWidget> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: widget.sourcesList.length,
+      length: 2,
       child: Column(
         children: [
           TabBar(
@@ -28,13 +27,12 @@ class _TabWidgetState extends State<TabWidget> {
               },
               isScrollable: true,
               indicatorColor: Colors.transparent,
-              tabs: widget.sourcesList
-                  .map((source) => TabItem(
-                      source: source,
-                      isSelected:
-                          selectedIndex == widget.sourcesList.indexOf(source)))
+              tabs: [Container(), Container()]
+                  .map(
+                    (source) => const TabItem(),
+                  )
                   .toList()),
-          Expanded(child: NewsWidget(source: widget.sourcesList[selectedIndex]))
+          const Expanded(child: NewsWidget())
         ],
       ),
     );

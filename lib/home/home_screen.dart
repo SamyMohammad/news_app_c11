@@ -9,6 +9,8 @@ import 'package:flutter_app_news_c10_fri/settings/settings_tab.dart';
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'home-screen';
 
+  const HomeScreen({super.key});
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -30,21 +32,22 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text(
-            selectedSideMenu == HomeDrawer.settings ?
-                'Settings':
-            selectedCategory == null ?'News App':
-            selectedCategory!.title,
+            selectedSideMenu == HomeDrawerEnum.settings
+                ? 'Settings'
+                : selectedCategory == null
+                    ? 'News App'
+                    : selectedCategory!.title,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         drawer: Drawer(
           child: HomeDrawer(onSideMenuClick: onSideMenuClick),
         ),
-        body: selectedSideMenu == HomeDrawer.settings ?
-            SettingsTab():
-        selectedCategory == null
-            ? CategoryFrgment(onCategoryClick: onCategoryClick)
-            : CategoryDetails(category: selectedCategory!),
+        body: selectedSideMenu == HomeDrawerEnum.settings
+            ? const SettingsTab()
+            : selectedCategory == null
+                ? CategoryFrgment(onCategoryClick: onCategoryClick)
+                : CategoryDetails(category: selectedCategory!),
       )
     ]);
   }
@@ -54,19 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void onCategoryClick(CategoryDM newSelectedCategory) {
     // todo: newSelectedCategory => User
     selectedCategory = newSelectedCategory;
-    setState(() {
-
-    });
-
+    setState(() {});
   }
 
-  int selectedSideMenu = HomeDrawer.categories ;
-  void onSideMenuClick(int newSelectedSideMenu){
-    selectedSideMenu = newSelectedSideMenu ;
-    selectedCategory = null ;
+  HomeDrawerEnum selectedSideMenu = HomeDrawerEnum.categories;
+  void onSideMenuClick(HomeDrawerEnum newSelectedSideMenu) {
+    selectedSideMenu = newSelectedSideMenu;
+    selectedCategory = null;
     Navigator.pop(context);
-    setState(() {
-
-    });
+    setState(() {});
   }
 }
